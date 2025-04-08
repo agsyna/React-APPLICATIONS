@@ -1,4 +1,4 @@
-import { Image, StyleSheet, Platform , View, Text, ImageBackground, Pressable, ScrollView, SafeAreaView} from 'react-native';
+import { Image, StyleSheet, Platform , View,TouchableOpacity , Text, ImageBackground, Pressable, ScrollView, SafeAreaView} from 'react-native';
 import Entypo from '@expo/vector-icons/Entypo';
 import { Appearance , TouchableWithoutFeedback} from 'react-native';
 import MapView , {Marker} from 'react-native-maps'; 
@@ -7,10 +7,16 @@ import {useState, useContext, useEffect, useRef} from "react";
 
 import Dropdown from './dropdown';
 
+import { useRouter } from "expo-router";
+
+
 
 import {Colors} from '@/constants/Colors';
 
 export default function HomeScreen() {
+
+      const router = useRouter()
+  
 
   const mapRef = useRef(null);
 
@@ -75,6 +81,10 @@ export default function HomeScreen() {
               coordinate={place.coordinates}
               title={place.id || `Marker ${index + 1}`}
               pinColor="red"
+              onPress={() =>{
+                console.log("Coordinates : "+place.coordinates);
+              }
+              }
             />
           ))}
         </MapView>
@@ -99,7 +109,9 @@ export default function HomeScreen() {
           </View> 
 
 
-          <Pressable style={{bottom:100, left:300, backgroundColor:"black", padding:8, borderRadius:8}}>
+          <Pressable style={{bottom:100, left:300, backgroundColor:"black", padding:8, borderRadius:8}} onPress={()=> 
+          router.push(`/explore`)
+          }>
           <Entypo name="add-to-list" size={40} color="gray" />
           </Pressable>
   </View>
